@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,12 @@ public class KafkaProjectApplication {
 		return args -> {
 			kafkaTemplate.send(kafkaConfigProps.getTopic(), payload);
 		};
+	}
+
+	@KafkaListener(topics = "customer.visit")
+	public String listens(final String in){
+		System.out.println(in);
+		return in;
 	}
 
 }
